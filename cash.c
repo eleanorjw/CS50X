@@ -4,7 +4,7 @@
 
 int main(void)
 {
-    float dollar;
+    float dollars;
     int n = 0;
     //prompt for dollars of non-zero positive value
     do
