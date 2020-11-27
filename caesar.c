@@ -16,7 +16,7 @@ int main(int argc, string argv[] )
             digit++;
         }
     }
-    //response on commandline arg
+    //respond on failed commandline arg
     if (argc != 2 || digit != strlen(argv[1]))
     {
         printf("Usage: ./caesar key\n");
