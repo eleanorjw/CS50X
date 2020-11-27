@@ -12,6 +12,7 @@ int main(int argc, string argv[])
         printf("Usage: ./caesar key\n");
         return 1;
     }
+    memset(ctext,0,50);
     //check if is digit
     int digit = 0;
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
