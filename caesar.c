@@ -19,7 +19,6 @@ int main(int argc, string argv[] )
     //response on commandline arg
     if (argc == 2 && digit == strlen(argv[1]))
     {
-        printf("Success\n");
     }
     else 
     {
@@ -45,7 +44,7 @@ int main(int argc, string argv[] )
             ctext[i] = text[i];
         }
     }
-    printf("%s\n", ctext);
+    printf("Ciphertext: %s\n", ctext);
     
 }
 
