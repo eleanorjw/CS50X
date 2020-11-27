@@ -41,7 +41,7 @@ int main(int argc, string argv[] )
             ctext[i] = text[i];
         }
     }
-    printf("Ciphertext: %s\n", ctext);
+    printf("ciphertext: %s\n", ctext);
     
 }
 
