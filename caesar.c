@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-int main(int argc, string argv[] )
+int main(int argc, string argv[])
 {
     char ctext[50];
     //check if is digit
@@ -30,17 +30,18 @@ int main(int argc, string argv[] )
     {
         if (isupper(text[i]))
         {
-            ctext[i] = (text[i] - 65  + key)%26 + 65;
+            ctext[i] = (text[i] - 65  + key) % 26 + 65;
         }
         else if (islower(text[i]))
         {
-            ctext[i] = (text[i] - 97 + key)%26 + 97;
+            ctext[i] = (text[i] - 97 + key) % 26 + 97;
         }
         else
         {
             ctext[i] = text[i];
         }
     }
+    //output
     printf("ciphertext: %s\n", ctext);
     
 }
