@@ -7,12 +7,13 @@
 int main(int argc, string argv[])
 {
     char ctext[50];
+    memset(ctext, 0, 50);
+    //no key entered
     if (argc != 2)
     {
         printf("Usage: ./caesar key\n");
         return 1;
     }
-    memset(ctext,0,50);
     //check if is digit
     int digit = 0;
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
@@ -22,7 +23,7 @@ int main(int argc, string argv[])
             digit++;
         }
     }
-    //respond on failed commandline arg
+    //key not digit
     if (digit != strlen(argv[1]))
     {
         printf("Usage: ./caesar key\n");
@@ -49,7 +50,6 @@ int main(int argc, string argv[])
     }
     //output
     printf("ciphertext: %s\n", ctext);
-    
 }
 
 
