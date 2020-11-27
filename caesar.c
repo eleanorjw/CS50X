@@ -6,7 +6,7 @@
 
 int main(int argc, string argv[] )
 {
-    string ctext = NULL;
+    char ctext[50];
     //check if is digit
     int digit = 0;
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
@@ -17,10 +17,7 @@ int main(int argc, string argv[] )
         }
     }
     //response on commandline arg
-    if (argc == 2 && digit == strlen(argv[1]))
-    {
-    }
-    else 
+    if (argc != 2 || digit != strlen(argv[1]))
     {
         printf("Usage: ./caesar key\n");
         return 1;
@@ -33,11 +30,11 @@ int main(int argc, string argv[] )
     {
         if (isupper(text[i]))
         {
-            ctext[i] = (text[i] + key)%26 + 65;
+            ctext[i] = (text[i] - 65  + key)%26 + 65;
         }
         else if (islower(text[i]))
         {
-            ctext[i] = (text[i] + key)%26 + 97;
+            ctext[i] = (text[i] - 97 + key)%26 + 97;
         }
         else
         {
