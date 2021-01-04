@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     int16_t buffer;
     while(fread(&buffer, sizeof(buffer), 1, input))
     {
-        buffer *= factor;
+        buffer = buffer * factor;
         fwrite(&buffer, sizeof(buffer), 1, output);
     }
 
