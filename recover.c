@@ -44,8 +44,7 @@ int main(int argc, char *argv[])
         else
         {
             fclose(img);
-            found ++;
-            sprintf(imgn,"%03i.jpg", found);
+            sprintf(imgn,"%03i.jpg", found++);
             img = fopen(imgn, "w");
         }
         if (img == NULL)
