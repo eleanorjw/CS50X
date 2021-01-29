@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
  int found = 0;
  int fileopen = 0;
  //Read file to find jpg n create jpg
- while (fread(buffer, 512, 1, inptr))
+ while (fread(buffer, BLOCK * BYTE, 1, inptr))
  {
      //find jpg
      if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xff) == 0xe0 )
@@ -52,12 +52,12 @@ int main(int argc, char *argv[])
         {
             return 1;
         }
-        fwrite(buffer, 512, 1, img);
+        fwrite(buffer, BLOCK * BYTE, 1, img);
      }
      //write blocks of jpg
      if (fileopen == 1)
      {
-         fwrite(buffer, 512, 1, img);
+         fwrite(buffer, BLOCK * BYTE, 1, img);
      }
  }
  fclose(img);
