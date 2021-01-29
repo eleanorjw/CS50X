@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
  BYTE buffer[512];
  //Create var
  FILE *img;
- char *imgn = NULL;
+ char imgn[8];
  int found = 0;
  int fileopen = 0;
  //Read file to find jpg n create jpg
@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
         {
             sprintf(imgn,"000.jpg");
             img = fopen(imgn, "w");
+            fileopen = 1;
         }
         else
         {
@@ -47,8 +48,11 @@ int main(int argc, char *argv[])
             sprintf(imgn,"%03i.jpg", found);
             img = fopen(imgn, "w");
         }
+        if (img == NULL)
+        {
+            return 1;
+        }
         fwrite(buffer, sizeof(buffer), 1, img);
-        fileopen = 1;
      }
      //write blocks of jpg
      if (fileopen == 1)
