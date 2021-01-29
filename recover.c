@@ -25,11 +25,14 @@ int main(int argc, char *argv[])
  
  //Create buffer
  BYTE buffer[BLOCK];
+ 
  //Create var
  FILE *img;
- char imgn[8];
+ char filename[8];
  int found = 0;
  int fileopen = 0;
+ int fileread = 0;
+ 
  //Read file to find jpg n create jpg
  while (fread(buffer, BLOCK, 1, inptr))
  {
@@ -44,19 +47,22 @@ int main(int argc, char *argv[])
         {
             fclose(img);
         }
-        sprintf(imgn,"%03i.jpg", found++);
-        img = fopen(imgn, "w");
+        
+        sprintf(filename,"%03i.jpg", found++);
+        img = fopen(filename, "w");
         if (img == NULL)
         {
             return 1;
         }
         fwrite(buffer, BLOCK, 1, img);
+        fileread = 1;
      }
      //write blocks of jpg
-     if (fileopen == 1)
+     if (fileopen == 1 && fileread = 0)
      {
          fwrite(buffer, BLOCK, 1, img);
      }
+     fileread = 0;
  }
  fclose(img);
  fclose(inptr);
