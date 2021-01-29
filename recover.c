@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         {
             fclose(img);
             found ++;
-            sprintf(imgn,"%30i.jpg", found);
+            sprintf(imgn,"%03i.jpg", found);
             img = fopen(imgn, "w");
         }
         fwrite(&buffer, sizeof(buffer), 1, img);
