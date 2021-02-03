@@ -38,7 +38,7 @@ bool check(const char *word)
     }
     
     // Get hashvalue of word
-    int val = hash(nword);
+    unsigned int  val = hash(nword);
     
     // Set cursor to the head of list
     node *cursor = table[val];
@@ -93,7 +93,7 @@ bool load(const char *dictionary)
             return false;
         }
     
-        int val = hash(word);
+        unsigned int val = hash(word);
         
         // if list is empty
         if (table[val] == NULL)
