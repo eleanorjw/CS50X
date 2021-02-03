@@ -30,15 +30,8 @@ int loadedWords = 0;
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    int len = strlen(word);
-    char nword[len];
-    for (int i = 0; i <= len; i++)
-    {
-        nword[i] = tolower(word[i]);
-    }
-    
     // Get hashvalue of word
-    unsigned int  val = hash(nword);
+    unsigned int  val = hash(word);
     
     // Set cursor to the head of list
     node *cursor = table[val];
@@ -46,14 +39,12 @@ bool check(const char *word)
     // Check words
     while (cursor != NULL)
     {
-        if (strcasecmp(cursor->word, word) == 0)
+        if (strcasecmp(word, cursor->word) == 0)
         {
             return true;
         }
-        else
-        {
-            cursor = cursor->next;
-        }
+        
+        cursor = cursor->next;
     }
     return false;
 }
@@ -65,7 +56,7 @@ unsigned int hash(const char *word)
     unsigned int hash = 0;
     for (int i = 0, n = strlen(word); i < n; i++)
     {
-        hash = (hash << 2) ^ word[i];
+        hash = (hash << 2) ^ tolower(word[i]);
     }
     return hash % N;
 }
