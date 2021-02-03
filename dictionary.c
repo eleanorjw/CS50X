@@ -30,8 +30,9 @@ int loadedWords = 0;
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
-    string nword = NULL;
-    for (int i = 0; word[i]; i++)
+    int len = strlen(word);
+    char nword[len];
+    for (int i = 0; i <= len; i++)
     {
         nword[i] = tolower(word[i]);
     }
