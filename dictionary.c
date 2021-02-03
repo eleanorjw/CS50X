@@ -88,29 +88,17 @@ bool load(const char *dictionary)
     {
         // Allocate memory
         node* n = malloc(sizeof(node));
-        if ( n == NULL)
+        if (n == NULL)
         {
             return false;
         }
     
         unsigned int val = hash(word);
         
-        // if list is empty
-        if (table[val] == NULL)
-        {
-            table[val] = n;
-            n->next = NULL;
-        }
-        // list not empty
-        else
-        {
-            //new->next points to the existing node and insert new node as 1st list
-            n->next = table[val];
-            table[val] = n;
-        }
-        
         // Insert word into new node
         strcpy(n->word, word);
+        n->next = table[val];
+        table[val] = n;
         loadedWords++;
         
         // Close dictionary
