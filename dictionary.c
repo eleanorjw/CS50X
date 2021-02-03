@@ -32,7 +32,7 @@ bool check(const char *word)
     string nword = NULL;
     for (int i = 0; word[i]; i++)
     {
-        nword[i] = word[i];
+        nword[i] = tolower(word[i]);
     }
     
     // Get hashvalue of word
