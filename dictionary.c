@@ -27,13 +27,12 @@ node *table[N];
 // Loadedwords
 unsigned int loadedWords = 0;
 
-unsigned int val;
 
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
     // Get hashvalue of word
-    val = hash(word);
+    unsigned int val = hash(word);
     
     // Set cursor to the head of list
     node *cursor = table[val];
@@ -54,7 +53,7 @@ bool check(const char *word)
 // Hashes word to a number FROM:https://www.reddit.com/r/cs50/comments/1x6vc8/pset6_trie_vs_hashtable/cf9189q/
 unsigned int hash(const char *word)
 {
-    // Get hash value using function
+    // Get hash value using function and ensure all words hashed in lowercase
     unsigned int hash = 0;
     for (int i = 0, n = strlen(word); i < n; i++)
     {
@@ -66,11 +65,11 @@ unsigned int hash(const char *word)
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary)
 {
-    // TODO
+    // Storage for word
     char word[LENGTH + 1]; 
     
     // Open file
-    FILE* infile = fopen(dictionary, "r");
+    FILE *infile = fopen(dictionary, "r");
     if (infile == NULL)
     {
         return false;
@@ -80,13 +79,14 @@ bool load(const char *dictionary)
     while (fscanf(infile, "%s", word) != EOF)
     {
         // Allocate memory
-        node* n = malloc(sizeof(node));
+        node *n = malloc(sizeof(node));
         if (n == NULL)
         {
             return false;
         }
-    
-        val = hash(word);
+        
+        // Hash word
+        unsigned int val = hash(word);
         
         // Insert word into new node
         strcpy(n->word, word);
@@ -97,6 +97,7 @@ bool load(const char *dictionary)
         // Count words
         loadedWords++;
     }
+    
     // Close dictionary
     fclose(infile);
     
@@ -106,20 +107,21 @@ bool load(const char *dictionary)
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
+    // return words counted
     return loadedWords;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void)
 {
-    // TODO
+    // Loop through hashtable
     for (int i = 0; i < N; i++)
     {
         node *cursor = table[i];
+        // Free memory one by one
         while (cursor != NULL)
         {
-            node * tmp = cursor;
+            node *tmp = cursor;
             cursor = cursor->next;
             free(tmp);
         }
