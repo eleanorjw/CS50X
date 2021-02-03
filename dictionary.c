@@ -25,13 +25,15 @@ const unsigned int N = 65536;
 node *table[N];
 
 // Loadedwords
-int loadedWords = 0;
+unsigned int loadedWords = 0;
+
+unsigned int val;
 
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
     // Get hashvalue of word
-    unsigned int  val = hash(word);
+    val = hash(word);
     
     // Set cursor to the head of list
     node *cursor = table[val];
@@ -84,17 +86,20 @@ bool load(const char *dictionary)
             return false;
         }
     
-        unsigned int val = hash(word);
+        val = hash(word);
         
         // Insert word into new node
         strcpy(n->word, word);
+        // Set new pointer 
         n->next = table[val];
+        // Set head to new pointer
         table[val] = n;
+        // Count words
         loadedWords++;
-        
-        // Close dictionary
-        fclose(infile);
     }
+    // Close dictionary
+    fclose(infile);
+    
     return true;
 }
 
