@@ -29,8 +29,14 @@ int loadedWords = 0;
 // Returns true if word is in dictionary, else false
 bool check(const char *word)
 {
+    string nword;
+    for (int i = 0; word[i]; i++)
+    {
+        nword[i] = word[i];
+    }
+    
     // Get hashvalue of word
-    int val = hash(word);
+    int val = hash(nword);
     
     // Set cursor to the head of list
     node *cursor = table[val];
@@ -131,7 +137,6 @@ bool unload(void)
             cursor = cursor->next;
             free(tmp);
         }
-        
     }
     return true;
 }
