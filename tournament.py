@@ -21,7 +21,6 @@ def main():
         for team in reader:
             team["rating"] = int(team["rating"])
             teams.append(team)
-            
 
     counts = {}
     # TODO: Simulate N tournaments and keep track of win counts
@@ -65,6 +64,7 @@ def simulate_tournament(teams):
     while len(teams) > 1:
         teams = simulate_round(teams)
     return teams[0]["team"]
+
 
 if __name__ == "__main__":
     main()
