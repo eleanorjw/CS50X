@@ -27,5 +27,5 @@ if index > 15:
 elif index < 1:
     print("Before Grade 1")
 else:
-    print(f"Grade{index}")
+    print(f"Grade {index}")
 
