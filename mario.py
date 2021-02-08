@@ -1,9 +1,9 @@
 from cs50 import get_int
 
-# Get height 1-9 from user
+# Get height 1-8 from user
 while True:
     h = get_int("Height: ")
-    if h > 0 and h < 10:
+    if h > 0 and h < 9:
         break
     
 # Print Block
