@@ -19,7 +19,7 @@ for c in text:
         stc += 1
 
 # Cal index
-index = round(0.0588 * (lttr / words) - 0.296 * (stc / words) - 15.8)
+index = round(0.0588 * (lttr / words * 100) - 0.296 * (stc / words * 100) - 15.8)
     
 # Print results
 if index > 15:
