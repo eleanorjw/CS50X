@@ -10,22 +10,22 @@ while True:
         break
 
 # Change of $0.25
-while change > 0.25:
+while change >= 0.25:
     change -= 0.25
     n += 1
 
 # Change of $0.10
-while change > 0.1:
+while change >= 0.1:
     change -= 0.1
     n += 1
 
 # Change of $0.05    
-while change > 0.05:
+while change >= 0.05:
     change -= 0.05
     n += 1
 
 # Change of $0.01   
-while change > 0.01:
+while change >= 0.01:
     change -= 0.01
     n += 1
 
