@@ -26,24 +26,19 @@ txtf.close()
 # Find max STR repeat
 max = []
 for i in range(1, col):
-    l = len(h[i])
+    L = len(h[i])
     tmp = 0
     m = 0
-    def checkSTR(j):
-        global tmp
-        global m
-        if txt[j:j + l] == h[i]:
+    j = 0
+    while j + L <= len(txt):
+        if txt[j:j + L] == h[i]:
             tmp += 1
-            j += l
+            j += L
             if tmp > m:
                 m = tmp
         else:
             tmp = 0
             j += 1
-            
-        if (j + l) <= len(txt):
-                checkSTR(j)
-    checkSTR(0)
     max.append(m)
     
 # Find match
