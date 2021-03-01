@@ -1,0 +1,284 @@
+/*General*/
+body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+}
+
+.main{
+    margin: 0 0 5vh 0;
+    padding: 0;
+    height: 95vh;
+    width: 100vw;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    height: 5vh;
+    width: 100vw;
+    background: #f8f9fa;
+    z-index: 200;
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.foot-item {
+    flex: 50vw;
+    text-align: center;
+    padding: 1vh 0;
+}
+header {
+    padding: 6vw 0 2vw 0;
+    text-align: center;
+}
+h1 {
+    font-size: 5vw;
+    padding: 1vw;
+}
+
+h2 {
+    font-size: 2.5vw;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/*nav fix top*/
+.top {
+    background: #f8f9fa;
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+/* center of page*/
+.center{
+    text-align: center;
+    position: relative;
+    top: 20vh;
+}
+
+.active{
+    background-color: #E3E3E3;
+}
+
+#edu img {
+    width: auto;
+    height: 30vw;
+    margin: 5vw 20px;
+    box-shadow: 0 0 15px 10px #EEEEEE;
+}
+
+/*home background*/
+#home{
+    background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),
+        url('mountain.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#secret {
+    background: linear-gradient(rgba(255,255,255,0.7),rgba(255,255,255,0.7)),
+        url('https://i.pinimg.com/originals/a0/7b/0e/a07b0e2d281a76c36560fbd58c1e2b92.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+/*scrollable-screen display settings*/
+#edu #hobby{
+    padding: 10vh 0 0 0;
+    text-align: center;
+}
+
+/* Right float stays more middle */
+.float-right {
+    margin-right: 6vw;
+}
+
+/* Timeline block */
+.timeline {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
+    padding: 0 0 2vw 5vw;
+}
+
+/* Timeline vertical line */
+.timeline:after {
+    content: ' ';
+    background: grey;
+    display: inline-block;
+    position: absolute; top: 1vh; left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 1rem;
+}
+
+/* Timeline box */
+.timeline-item {
+    margin: 5vh 0;
+    padding: 10px;
+    background: grey;
+    border-radius: 5px;
+}
+
+/* Timeline item arrow */
+.timeline-arrow {
+    border-top: 0.5rem solid transparent;
+    border-right: 0.5rem solid grey;
+    border-bottom: 0.5rem solid transparent;
+    display: block;
+    position: absolute;
+    left: 4vw;
+}
+
+/* Timeline item circle */
+.timeline-item::before {
+    content: ' ';
+    background: #ddd;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    left: 1.5vw;
+    width: 14px;
+    height: 14px;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* center image block */
+.center-box{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60vw;
+}
+
+/* flex img */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 2vw;
+}
+
+/* Create 2 equal columns that sits next to each other */
+.column {
+  flex: 50%;
+  max-width: 50%;
+  padding: 0 1vw;
+}
+
+/* styling img */
+.column img {
+  margin-top: 2vw;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* enclose img and text */
+.item {
+    position: relative;
+}
+
+/* overlay in img */
+.overlay {
+  position: absolute;
+  top: 2vw;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% -2vw);
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #000;
+}
+
+/* Set opacity */
+.item:hover .overlay {
+  opacity: .5;
+}
+
+/* styling text in img */
+.text {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* date block */
+.date {
+    border-radius: .2vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20vw;
+    padding: 3vw 0;
+    background: #F08080;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
+}
+
+.date p {
+    margin: .5vw 0;
+}
+
+/* Smaller screen layout */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 2vw;
+    }
+    .btn {
+        padding: .35rem .5rem;
+        font-size: .8rem;
+    }
+    #edu img {
+        display: block;
+        margin: auto;
+        width: auto;
+        height: 40vh;
+        margin-top: 8vh;
+    }
+    .timeline {
+        width: 50vw;
+    }
+
+    .clrfloat {
+        float: none !important;
+    }
+
+    .column {
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    .center-box {
+        width: 100vw;
+    }
+
+    .date {
+        width: 30vw;
+        padding: 10vw 0;
+    }
+}
+
+/* Responsive layout in Hobby for bigger img */
+@media screen and (max-width: 1080px) {
+  .center-box {
+      width: 80vw;
+  }
+}
+}
