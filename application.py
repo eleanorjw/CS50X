@@ -105,18 +105,20 @@ def buy():
 
             # Insert stock and transaction table
             if len(db.execute("SELECT * FROM stocks WHERE symbol = ? AND user_id = ?", symbol, session["user_id"])) == 0:
-                db.execute("INSERT INTO stocks (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)", session["user_id"], symbol, shares, price)
+                db.execute("INSERT INTO stocks (user_id, symbol, shares, price) VALUES (?, ?, ?, ?)", 
+                           session["user_id"], symbol, shares, price)
             # Stock with existing shares
             else:
-                db.execute("UPDATE stocks SET shares = shares + ? WHERE symbol = ? AND user_id = ?", shares, symbol, session["user_id"])
+                db.execute("UPDATE stocks SET shares = shares + ? WHERE symbol = ? AND user_id = ?",
+                           shares, symbol, session["user_id"])
 
-            db.execute("INSERT INTO transactions (user_id, symbol, shares, price, sum) VALUES (?, ?, ?, ?, ?)", session["user_id"], symbol, shares, price, sum)
+            db.execute("INSERT INTO transactions (user_id, symbol, shares, price, sum) VALUES (?, ?, ?, ?, ?)",
+                       session["user_id"], symbol, shares, price, sum)
 
         # Redirect user to home page
         return redirect("/")
     else:
         return render_template("buy.html")
-
 
 
 @app.route("/history")
@@ -230,7 +232,8 @@ def register():
 
         else:
             # Insert into database
-            db.execute("INSERT INTO users (username, hash) VALUES (? ,?)", name, generate_password_hash(request.form.get("password")))
+            db.execute("INSERT INTO users (username, hash) VALUES (? ,?)",
+                name, generate_password_hash(request.form.get("password")))
 
             # Remember which user has logged in
             session["user_id"] = db.execute("SELECT id FROM users WHERE username = ?", name)[0]["id"]
@@ -255,7 +258,8 @@ def sell():
             return apology("no symbol selected", 400)
 
         shares = request.form.get("shares")
-        oldshares = int(db.execute("SELECT shares FROM stocks WHERE symbol = ? AND user_id = ?", symbol, session["user_id"])[0]["shares"])
+        oldshares = int(db.execute("SELECT shares FROM stocks WHERE symbol = ? AND user_id = ?",
+            symbol, session["user_id"])[0]["shares"])
 
         if not shares:
             return apology("must type in shares", 400)
@@ -271,8 +275,10 @@ def sell():
             sum = round(int(shares) * float(price), 2)
 
             # Update stock and transcastion
-            db.execute("UPDATE stocks SET shares = ? WHERE symbol = ? AND user_id = ?", oldshares - int(shares), symbol, session["user_id"])
-            db.execute("INSERT INTO transactions (symbol, shares, price, sum, user_id) VALUES (?, ?, ?, ?, ?)", symbol, "-" + shares, price, sum, session["user_id"])
+            db.execute("UPDATE stocks SET shares = ? WHERE symbol = ? AND user_id = ?",
+                       oldshares - int(shares), symbol, session["user_id"])
+            db.execute("INSERT INTO transactions (symbol, shares, price, sum, user_id) VALUES (?, ?, ?, ?, ?)",
+                       symbol, "-" + shares, price, sum, session["user_id"])
 
             # Update cash
             db.execute("UPDATE users SET cash = cash + ? WHERE id = ?", sum, session["user_id"])
@@ -305,7 +311,8 @@ def change():
 
         else:
             # Insert into database
-            db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(request.form.get("password")), session["user_id"])
+            db.execute("UPDATE users SET hash = ? WHERE id = ?",
+                       generate_password_hash(request.form.get("password")), session["user_id"])
 
         # Redirect user to home page
         return redirect("/")
