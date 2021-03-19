@@ -206,19 +206,19 @@ def register():
 
         # Ensure username was submitted
         if not name:
-            return apology("must provide username", 403)
+            return apology("must provide username", 400)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return apology("must provide password", 400)
 
         # Ensure password was confirmed
         elif not request.form.get("confirmation"):
-            return apology("must confirmed password", 403)
+            return apology("must confirmed password", 400)
 
         # Ensure passwords are same
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("different password typed")
+            return apology("different password typed", 403)
 
         # Invalid username
         elif len(db.execute("SELECT * FROM users WHERE username = ?", name)) != 0:
@@ -229,7 +229,7 @@ def register():
             db.execute("INSERT INTO users (username, hash) VALUES (? ,?)", name, generate_password_hash(request.form.get("password")))
 
             # Remember which user has logged in
-            session["user_id"] = db.execute("SELECT id FROM users WHERE username = ?", name)
+            session["user_id"] = db.execute("SELECT id FROM users WHERE username = ?", name)[0]["id"]
 
         # Redirect user to home page
         return redirect("/")
@@ -290,7 +290,7 @@ def change():
 
         # Ensure passwords are same
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("different password typed")
+            return apology("different password typed", 403)
 
         else:
             # Insert into database
