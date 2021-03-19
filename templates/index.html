@@ -19,18 +19,18 @@
                 <tr>
                     <th scope="row">{{ stock.symbol|upper }}</th>
                     <td>{{ stock.shares }}</td>
-                    <td>{{ '%0.2f'| format(stock.price|float) }}</td>
-                    <td>{{ '%0.2f'| format(stock.sum|float) }}</td>
+                    <td>{{ stock.price|usd }}</td>
+                    <td>{{ stock.sum|usd }}</td>
                 </tr>
             {% endfor %}
             <tr>
                 <th scope="row">Cash</th>
                 <td colspan="2"></td>
-                <td>{{ cash }}</td>
+                <td>{{ cash|usd }}</td>
             </tr>
             <tr>
                 <th scope="row" colspan="3"></th>
-                <td>{{ sum }}</td>
+                <td>{{ sum|usd }}</td>
             </tr>
         </tbody>
     </table>

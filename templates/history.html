@@ -20,8 +20,8 @@
                 <tr>
                     <th scope="row">{{ transaction.symbol|upper }}</th>
                     <td>{{ transaction.shares }}</td>
-                    <td>{{ transaction.price }}</td>
-                    <td>{{ '%0.2f'| format(transaction.SUM|float) }}</td>
+                    <td>{{ transaction.price|usd }}</td>
+                    <td>{{ format(transaction.SUM|usd }}</td>
                     <td>{{ transaction.TIME }}</td>
                 </tr>
             {% endfor %}

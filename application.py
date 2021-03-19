@@ -81,9 +81,9 @@ def buy():
 
         # Check valid input
         if not symbol or lookup(symbol) == None:
-            return apology("invalid symbol", 403)
+            return apology("invalid symbol", 400)
         elif not shares or int(ord(shares[0])) > 57 or int(ord(shares[0])) < 48 or int(shares) < 0:
-            return apology("invalid shares", 403)
+            return apology("invalid shares", 400)
 
         # Price of shares
         price = lookup(symbol)["price"]
@@ -94,7 +94,7 @@ def buy():
 
         # Check if enough cash
         if sum > user[0]["cash"]:
-            return apology("not enough cash", 403)
+            return apology("not enough cash", 400)
         else:
             # Update cash
             db.execute("UPDATE users SET cash = cash - ? WHERE id = ?", sum, session["user_id"])
@@ -180,12 +180,12 @@ def quote():
 
         # User search nothing
         if not request.form.get("symbol"):
-            return redirect("/quote")
+            return apology("must type in symbol", 400)
 
         # Lookup for symbol, diaplay result if exist, else error
         result = lookup(request.form.get("symbol"))
         if result == None:
-            return apology("stock not exist", 403)
+            return apology("stock not exist", 400)
         else:
             return render_template("quoted.html", result=result)
 
@@ -218,11 +218,11 @@ def register():
 
         # Ensure passwords are same
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("different password typed", 403)
+            return apology("different password typed", 400)
 
         # Invalid username
         elif len(db.execute("SELECT * FROM users WHERE username = ?", name)) != 0:
-            return apology("username existed", 403)
+            return apology("username existed", 400)
 
         else:
             # Insert into database
@@ -248,13 +248,13 @@ def sell():
     if request.method == "POST":
         symbol = request.form.get("symbol")
         if not symbol:
-            return apology("no symbol selected", 403)
+            return apology("no symbol selected", 400)
 
         shares = request.form.get("shares")
         oldshares = int(db.execute("SELECT shares FROM stocks WHERE symbol = ? AND user_id = ?", symbol, session["user_id"])[0]["shares"])
 
         if not shares or int(ord(shares[0])) > 57 or int(ord(shares[0])) < 48 or int(shares) > oldshares or int(shares) < 0:
-            return apology("invalid shares", 403)
+            return apology("invalid shares", 400)
         else:
             price = lookup(symbol)["price"]
             sum = round(int(shares) * float(price), 2)

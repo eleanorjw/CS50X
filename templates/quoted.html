@@ -5,5 +5,5 @@
 {% endblock %}
 
 {% block main %}
-    A share of {{ result.name }} ({{ result.symbol }}) costs {{ result.price }}.
+    A share of {{ result.name }} ({{ result.symbol }}) costs {{ result.price|usd }}.
 {% endblock %}
