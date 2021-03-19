@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price ($)</th>
+                <th scope="col">Total ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <th scope="row">{{ stock.symbol|upper }}</th>
+                    <td>{{ stock.shares }}</td>
+                    <td>{{ '%0.2f'| format(stock.price|float) }}</td>
+                    <td>{{ '%0.2f'| format(stock.sum|float) }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th scope="row">Cash</th>
+                <td colspan="2"></td>
+                <td>{{ cash }}</td>
+            </tr>
+            <tr>
+                <th scope="row" colspan="3"></th>
+                <td>{{ sum }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="small text-center">
+        <br><br>
+        Change password <a href="/change">here</a>
+    </div>
+
+{% endblock %}
