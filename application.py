@@ -82,9 +82,13 @@ def buy():
         # Check valid input
         if not symbol or lookup(symbol) == None:
             return apology("invalid symbol", 400)
-        elif not shares or int(ord(shares[0])) > 57 or int(ord(shares[0])) < 48 or int(shares) < 0:
+        elif not shares:
+            return apology("must type in shares", 400)
+        for c in shares:
+            if int(ord(c)) > 57 or int(ord(c)) < 48:
+                return apology("invalid shares", 400)
+        if int(shares) < 0:
             return apology("invalid shares", 400)
-
         # Price of shares
         price = lookup(symbol)["price"]
         sum = round(float(price) * int(shares), 2)
@@ -253,7 +257,14 @@ def sell():
         shares = request.form.get("shares")
         oldshares = int(db.execute("SELECT shares FROM stocks WHERE symbol = ? AND user_id = ?", symbol, session["user_id"])[0]["shares"])
 
-        if not shares or int(ord(shares[0])) > 57 or int(ord(shares[0])) < 48 or int(shares) > oldshares or int(shares) < 0:
+        if not shares:
+            return apology("must type in shares", 400)
+
+        for c in shares:
+            if int(ord(c)) > 57 or int(ord(c)) < 48:
+                return apology("invalid shares", 400)
+
+        if int(shares) > oldshares or int(shares) < 0:
             return apology("invalid shares", 400)
         else:
             price = lookup(symbol)["price"]
