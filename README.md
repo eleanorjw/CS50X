@@ -10,7 +10,7 @@ Stopwatch to keep track of time elapsed, AND
 Workout plans which enable users to personalise.**
 
 
-The web-app is loosely based on CS50 Finance in terms of the use of Flask and some idea of styling.
+**The web-app is loosely based on CS50 Finance in terms of the use of Flask and some idea of styling.**
 
 ###### The Registering and Loging In
 The users are required to create at least a 8 characters password with letters and numbers only and at least a number.
