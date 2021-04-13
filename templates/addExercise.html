@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Exercise
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <form action="/add" method="post" onchange="enable()">
+            <div class="form-group">
+                <div id="hide" style="color:#FF6347;">
+                    <small>{{ invalid }}</small>
+                </div>
+                <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Exercise" type="text">
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" name="link" placeholder="Link of Image" type="text">
+            </div>
+            <div class="form-group">
+                <select name="part" class="p-2 rounded">
+                    <option value="" selected disabled>Body Parts</option>
+                    <option value="lower body">lower body</option>
+                    <option value="upper body">upper body</option>
+                    <option value="full body">full body</option>
+                 </select>
+            </div>
+            <button id="btnd" class="btn btn-light" type="submit" disabled>Add</button>
+            <button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Add</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        let input = document.querySelectorAll('input');
+        let select = document.querySelector('select');
+
+        //Enable button
+        function enable()
+        {
+            if (input[0].value && select.value != '')
+            {
+                document.getElementById('btnsh').style.display = 'inline-block';
+                document.getElementById('btnd').style.display = 'none';
+            }
+            else
+            {
+                document.getElementById('btnd').style.display = 'inline-block';
+                document.getElementById('btnsh').style.display = 'none';
+            }
+        }
+
+        //Hide warning
+        document.body.addEventListener('click', function()
+        {
+            document.getElementById('hide').style.display = 'none';
+        });
+    </script>
+{% endblock %}
