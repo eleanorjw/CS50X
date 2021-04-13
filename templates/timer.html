@@ -1,0 +1,218 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Timer
+{% endblock %}
+
+
+{% block main %}
+    <div class="bg-dark text-light">
+        <!-- Set Interval -->
+        <div class="div-f" id="setting">
+            <form onsubmit="set();return false">
+                <h1>Set Your Interval</h1><br>
+                <div class="form-group">
+                    <select class="p-2 rounded">
+                        <option value="" selected disabled>Duration (sec)</option>
+                        <option value="30">30 sec</option>
+                        <option value="45">45 sec</option>
+                        <option value="60">60 sec</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <select class="p-2 rounded">
+                        <option value="" selected disabled>Rest (sec)</option>
+                        <option value="5">5 sec</option>
+                        <option value="15">15 sec</option>
+                        <option value="30">30 sec</option>
+                     </select>
+                </div>
+                <div class="form-group">
+                    <select class="p-2 rounded">
+                        <option value="" selected disabled>Repetition</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                     </select>
+                </div>
+                <button class="btn btn-light" type="submit">Start Now</button>
+            </form>
+        </div>
+
+        <!-- Timer -->
+        <div class="div-f" id="timer" style="display:none;">
+            <h1>Timer</h1>
+            <div id="circle">
+                <div>
+                    <p>  <span id="s">0</span> s</p>
+                </div>
+            </div>
+            <p id="dur">
+                Duration: <span id="duration">00:00</span>
+            </p>
+            <button onclick="action()" class="rounded-pill m-2 btn btn-light" >
+                <img id="stop" style="display:none;" src="/static/pause.svg" />
+                <img id="play" src="/static/play.svg" />
+            </button>
+            <button onclick="reset()" class="rounded-pill m-2 btn btn-light" >
+                <img src="/static/stop.svg" />
+             </button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+
+    <script>
+        var select = document.querySelectorAll('select');
+        let DURATION, REST, REP, rep, isRest, isFinish, play;
+        let timepass = 0;
+        let timeElapsed = 0;
+
+        //Format into m:ss
+        function format(time) {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            if (seconds < 10) {
+                seconds = `0${seconds}`;
+             }
+
+            return `${minutes}:${seconds}`;
+        }
+
+        //Update HTML
+        function update()
+        {
+            timepass++;
+            timeElapsed++;
+            document.getElementById('duration').innerHTML = format(timepass);
+            if (isRest)
+            {
+                document.getElementById('s').innerHTML = REST - timeElapsed;
+            }
+            else
+            {
+                document.getElementById('s').innerHTML = DURATION - timeElapsed;
+            }
+        }
+
+        function updateNewInterval()
+        {
+            timepass++;
+            document.getElementById('duration').innerHTML = format(timepass);
+            if (isRest)
+            {
+                document.getElementById('s').innerHTML = REST - 1;
+            }
+            else
+            {
+                document.getElementById('s').innerHTML = DURATION - 1;
+            }
+        }
+
+        //Start
+        function start()
+        {
+            if (!isRest)
+            {
+                if (timeElapsed < DURATION)
+                {
+                    update();
+                }
+                else
+                {
+                    timeElapsed = 1;
+                    isRest = true;
+                    rep--;
+                    isFinish = rep == 0;
+                    if (isFinish)
+                    {
+                        document.getElementById('setting').style.display = 'inline-block';
+                        document.getElementById('timer').style.display = 'none';
+                        const Http = new XMLHttpRequest();
+                        Http.open("GET", window.location.origin + "/insert?q=" + format(DURATION * REP + REST * (REP - 1)) + "&e=timer");
+                        Http.send();
+                        alert("Workout Completed!");
+                        stop();
+                    }
+                    else
+                    {
+                        updateNewInterval();
+                    }
+                }
+            }
+            else
+            {
+                if (timeElapsed < REST)
+                {
+                    update();
+                }
+                else
+                {
+                    isRest = false;
+                    timeElapsed = 1;
+                    updateNewInterval();
+                }
+            }
+        }
+
+        //Stop
+        function stop()
+        {
+            clearInterval(play);
+        }
+
+        //Set
+        function set()
+        {
+            if (select[0].value != '' && select[2].value != '' && select[2].value != '')
+            {
+                DURATION = parseInt(select[0].value, 10);
+                REST = parseInt(select[1].value, 10);
+                REP = parseInt(select[2].value, 10);
+                rep = REP;
+                isRest = false;
+                isFinish = false;
+                timeElapsed = 0;
+                timepass = 0;
+                document.getElementById('setting').style.display = 'none';
+                document.getElementById('timer').style.display = 'inline-block';
+                document.getElementById('s').innerHTML = DURATION;
+                document.getElementById('duration').innerHTML='00:00';
+            }
+        }
+
+        //Resume or Pause
+        function action()
+        {
+            if (document.getElementById('stop').style.display == 'none')
+            {
+                document.getElementById('stop').style.display = 'inline-block';
+                document.getElementById('play').style.display = 'none';
+                play = setInterval(start, 1000);
+
+            }
+            else
+            {
+                document.getElementById('stop').style.display = 'none';
+                document.getElementById('play').style.display = 'inline-block';
+                stop();
+            }
+        }
+
+        //Reset
+        function reset()
+        {
+            stop();
+            set();
+            timepass = 0;
+            timeElapsed = 0;
+            document.getElementById('duration').innerHTML='00:00';
+            document.getElementById('stop').style.display = 'none';
+            document.getElementById('play').style.display = 'inline-block';
+        }
+
+    </script>
+{% endblock %}
