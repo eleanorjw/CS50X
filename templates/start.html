@@ -1,0 +1,221 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Start
+{% endblock %}
+
+{% block main %}
+    <div id="list" class="div-f bg-dark">
+        <div>
+            <h1 class="p-3">{{ name }}</h1>
+            <div class="table-block">
+                <table class="table table-dark mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Exercise</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plan in plan %}
+                        <tr>
+                            <td>{{ plan.ord }}</td>
+                            <td class="text-break">{{ plan.exercise }}</td>
+                            <td><img class="rounded" style="width: 6rem; max-height: 4rem;"src="{{ plan.link }}"></td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-border">
+                        <th>Duration</th>
+                        <td colspan="2" id="dur">{{ dur }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <button class="btn btn-light m-5" onclick='set({{plan|tojson|safe}})'>Start</button>
+        </div>
+
+    </div>
+    <div id="start" class="div-f" style="display:none;">
+        <h3 class="mt-5 mb-2">{{ plan[0].exercise}}</h3>
+        <img class="m-2 rounded" style="width: 10rem; height: auto;" id="link" src="{{ plan[0].link }}">
+        <div id="timeleft-b">
+            <span id="time">{{ plan[0].duration}}</span>s
+        </div>
+        <p id="dur">
+            Duration: <span id="duration">00:00</span>
+        </p>
+        <button onclick="action()" class="rounded-pill m-2 btn btn-light" >
+            <img id="stop" style="display:none;" src="/static/pause.svg" />
+            <img id="play" src="/static/play.svg" />
+        </button>
+        <button onclick="reset()" class="rounded-pill m-2 btn btn-light" >
+            <img src="/static/stop.svg" />
+        </button>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        let name = document.querySelector('button').value;
+        let DURATION, REST, REP, rep, isRest, isFinish, play, plans;
+        let timepass = 0;
+        let timeElapsed = 0;
+        let ord = 0;
+
+        //Format into m:ss
+        function format(time) {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            if (seconds < 10) {
+                seconds = `0${seconds}`;
+             }
+            return `${minutes}:${seconds}`;
+        }
+
+        //Set up timer for plan
+        function set(plan)
+        {
+            DURATION = parseInt(plan[0]['duration'], 10);
+            REST = parseInt(plan[0]['rest'], 10);
+            REP = plan.length;
+            rep = REP;
+            isRest = false;
+            isFinish = false;
+            plans = plan;
+            document.getElementById('list').style.display = 'none';
+            document.getElementById('start').style.display = 'inline-block';
+        }
+
+        //Update HTML
+        function update()
+        {
+            timepass++;
+            timeElapsed++;
+            document.getElementById('duration').innerHTML = format(timepass);
+            if (isRest)
+            {
+                document.getElementById('time').innerHTML = REST - timeElapsed;
+            }
+            else
+            {
+                document.getElementById('time').innerHTML = DURATION - timeElapsed;
+            }
+        }
+
+        //Reset HTML to corrrect interval between workout or rest
+        function updateNewInterval()
+        {
+            timepass++;
+            document.getElementById('duration').innerHTML = format(timepass);
+            if (isRest)
+            {
+                document.getElementById('time').innerHTML = REST - 1;
+            }
+            else
+            {
+                document.getElementById('time').innerHTML = DURATION - 1;
+            }
+        }
+
+        //Start
+        function start()
+        {
+            if (!isRest)
+            {
+                //Check if workout duration has past
+                if (timeElapsed < DURATION)
+                {
+                    update();
+                }
+                else
+                {
+                    //Rest or Complete workout
+                    timeElapsed = 1;
+                    isRest = true;
+                    rep--;
+                    ord++;
+                    isFinish = rep == 0;
+                    if (isFinish)
+                    {
+                        document.getElementById('list').style.display = 'inline-block';
+                        document.getElementById('start').style.display = 'none';
+                        const Http = new XMLHttpRequest();
+                        Http.open("GET", window.location.origin + "/insert?q=" +
+                            document.getElementById('dur').innerHTML + "&e=" + document.querySelector('h1').innerHTML.replace(" ", "-"));
+                        Http.send();
+                        alert("Workout Completed!");
+                        stop();
+                        const http = new XMLHttpRequest();
+                        http.open("POST", "/history");
+                        http.send();
+                    }
+                    else
+                    {
+                        updateNewInterval();
+                        document.querySelector('h3').innerHTML = 'Rest';
+                        document.getElementById('link').src = '';
+                    }
+                }
+            }
+            else
+            {
+                //Check if rest past
+                if (timeElapsed < REST)
+                {
+                    update();
+                }
+                else
+                {
+                    isRest = false;
+                    timeElapsed = 1;
+                    updateNewInterval();
+                    document.querySelector('h3').innerHTML = plans[ord]['exercise'];
+                    document.getElementById('link').src = plans[ord]['link'];
+                }
+            }
+        }
+
+        //Stop
+        function stop()
+        {
+            clearInterval(play);
+        }
+
+        //Reset
+        function reset()
+        {
+            stop();
+            set(plans);
+            timepass = 0;
+            timeElapsed = 0;
+            ord = 0;
+            document.getElementById('link').src=plans[ord].link;
+            document.querySelector('h3').innerHTML = plans[ord]['exercise'];
+            document.getElementById('time').innerHTML = DURATION;
+            document.getElementById('duration').innerHTML='00:00';
+            document.getElementById('stop').style.display = 'none';
+            document.getElementById('play').style.display = 'inline-block';
+        }
+
+        //Rsume or Pause
+        function action()
+        {
+            if (document.getElementById('stop').style.display == 'none')
+            {
+                document.getElementById('stop').style.display = 'inline-block';
+                document.getElementById('play').style.display = 'none';
+                play = setInterval(start, 1000);
+
+            }
+            else
+            {
+                document.getElementById('stop').style.display = 'none';
+                document.getElementById('play').style.display = 'inline-block';
+                stop();
+            }
+        }
+
+    </script>
+{% endblock %}

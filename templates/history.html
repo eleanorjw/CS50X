@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <div class="table-block">
+            <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Exercise</th>
+                    <th scope="col">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in history %}
+                    <tr>
+                        <td>{{ history.time }}</td>
+                        <td>{{ history.exercise }}</td>
+                        <td>{{ history.duration }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+{% endblock %}
