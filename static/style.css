@@ -1,0 +1,139 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+nav .navbar-brand .green
+{
+    color: #2e944b;
+}
+
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main form
+{
+    padding: 15vh 0;
+}
+
+main .div form
+{
+    padding: 3vh 0;
+}
+main
+{
+    /* Center contents */
+    position: relative;
+    text-align: center;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main #home
+{
+    /* Background */
+    background: linear-gradient(rgba(255,255,255,0.3),rgba(255,255,255,0.3)),
+        url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8Zml0bmVzc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    /* Div size*/
+    width: 100vw;
+    height: 100vh;
+}
+
+main .p1
+{
+    font-size: 3.5rem;
+    font-weight: 700;
+    padding-top: 45vh;
+}
+
+main .div
+{
+    width: 100vw;
+    padding: 10vh 0;
+}
+
+main .div-f
+{
+    width: 100vw;
+    min-height: 100vh;
+    padding: 5rem 0 0 0;
+}
+
+main ul
+{
+    display: inline-block;
+}
+
+li
+{
+    text-align: left;
+}
+
+main .bimg img
+{
+    /* Constrain images on small screens */
+    height: 80vh;
+    width: auto;
+    max-width: 100%;
+}
+
+#circle
+{
+    width: 15rem;
+    height: 15rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 2rem;
+
+}
+
+#circle div
+{
+
+    font-size: 3rem;
+    font-weight: 300;
+    margin: 5rem 0;
+}
+
+button img
+{
+    width: 2rem;
+}
+
+#timeleft-b
+{
+    font-size: 3rem;
+    font-weight: 300;
+    margin: 3rem 0;
+}
+
+ol
+{
+    display:block;
+    width: 30vh;
+    margin: 0 auto 3rem;
+}
+
+.table-block
+{
+    display:block;
+    width: 90vw;
+    margin: 0 auto;
+}

@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stopwatch
+{% endblock %}
+
+
+{% block main %}
+    <div class="div-f">
+        <h1 class="mt-5 mb-2">Stopwatch</h1>
+        <div id="circle">
+            <div>
+                <span id="s">0 s</span>
+            </div>
+        </div>
+        <div>
+            <button onclick="action()" class="rounded-pill m-2 btn btn-light" >
+                <img id="stop" style="display:none;" src="/static/pause.svg" />
+                <img id="play" src="/static/play.svg" />
+            </button>
+            <button onclick="reset()" class="rounded-pill m-2 btn btn-light" >
+                <img src="/static/stop.svg" />
+            </button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        let play;
+        let timepass = 0;
+
+        //Format into m:ss
+        function format(time) {
+            let hours = Math.floor(time / 3600);
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            if (seconds < 10)
+            {
+                seconds = `0${seconds}`;
+            }
+            if (hours > 0)
+            {
+                if (minutes < 10)
+                {
+                    minutes = `0${minutes}`;
+                }
+                return `${hours}:${minutes}:${seconds}`;
+            }
+            else
+            {
+                return `${minutes}:${seconds}`;
+            }
+        }
+
+        //Update HTML
+        function update()
+        {
+            timepass++;
+            document.getElementById('s').innerHTML = format(timepass);
+        }
+
+
+        //Stop
+        function stop()
+        {
+            clearInterval(play);
+        }
+
+        function action()
+        {
+            if (document.getElementById('stop').style.display == 'none')
+            {
+                document.getElementById('stop').style.display = 'inline-block';
+                document.getElementById('play').style.display = 'none';
+                play = setInterval(update, 1000);
+
+            }
+            else
+            {
+                document.getElementById('stop').style.display = 'none';
+                document.getElementById('play').style.display = 'inline-block';
+                stop();
+                document.getElementById('s').innerHTML = format(timepass);
+            }
+        }
+
+        //Rest stopwatch
+        function reset()
+        {
+            stop();
+            document.getElementById('stop').style.display = 'none';
+            document.getElementById('play').style.display = 'inline-block';
+            if (confirm("Save progress?")) {
+                const Http = new XMLHttpRequest();
+                Http.open("GET", window.location.origin + "/insert?q=" + format(timepass) + "&e=stopwatch");
+                Http.send();
+                alert("You've workout for " + format(timepass));
+                document.getElementById('s').innerHTML='0 s';
+                timepass = 0;
+            } else {
+                if (confirm("Restart?"))
+                {
+                    document.getElementById('s').innerHTML='0 s';
+                    timepass = 0;
+                }
+                else
+                {
+                    action();
+                }
+            }
+
+        }
+    </script>
+{% endblock %}
