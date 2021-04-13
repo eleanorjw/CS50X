@@ -2,15 +2,15 @@
 #### Video Demo: https://youtu.be/xHBzPLzAve8
 #### Description:
 
-
-**This is a web-application with features such as,
+**
+This is a web-application with features such as,
 BMI & Waist-Hip-ratio calculator to let users have some insight into their health status,
 IntervalTimer for HIIT, Tabata and whatnot,
 Stopwatch to keep track of time elapsed, AND
-Workout plans which enable users to personalise.**
+Workout plans which enable users to personalise.
+**
 
-
-**The web-app is loosely based on CS50 Finance in terms of the use of Flask and some idea of styling.**
+The web-app is loosely based on CS50 Finance in terms of the use of Flask and some idea of styling.
 
 ###### The Registering and Loging In
 The users are required to create at least a 8 characters password with letters and numbers only and at least a number.
