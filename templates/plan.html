@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Plans
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <form action="/plan" method="post">
+            <h1>Select Your Plan</h1><br>
+            <div class="form-group">
+                <select class="p-2 rounded" name="plan">
+                    <option value="" selected disabled>Workout Plan</option>
+                    {% for plan in plan %}
+                        <option value="{{ plan.plan }}">{{ plan.plan }}</option>
+                    {% endfor %}
+                    <option value="create">Add More</option>
+                 </select>
+            </div>
+            <button class="btn btn-light" type="submit">Select</button>
+        </form>
+    </div>
+{% endblock %}
+
