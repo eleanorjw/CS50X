@@ -24,7 +24,7 @@
                     <option value="full body">full body</option>
                  </select>
             </div>
-            <button class="btn btn-light" type="submit" disabled>Add</button>
+            <button id="btn" class="btn btn-light" type="submit" disabled>Add</button>
         </form>
     </div>
 {% endblock %}
@@ -39,11 +39,11 @@
         {
             if (input[0].value && select.value != '')
             {
-                document.querySelector('button').disabled = false;
+                document.getElementById('btn').disabled = false;
             }
             else
             {
-                document.querySelector('button').disabled = true;
+                document.getElementById('btn').disabled = true;
             }
         }
 
