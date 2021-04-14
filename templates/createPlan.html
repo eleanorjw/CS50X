@@ -73,7 +73,7 @@
                     <option value="30">30 sec</option>
                  </select>
             </div>
-            <button class="btn btn-dark" type="submit" disabled>Create</button>
+            <button id="btn" class="btn btn-dark" type="submit" disabled>Create</button>
         </form>
     </div>
 
@@ -169,11 +169,11 @@
         {
             if (input[1].value != '' && select[1].value != '' && select[2].value != '' && document.querySelector('ol').innerText != '')
             {
-                document.querySelector('button').disabled = false;
+                document.getElementById('btn').disabled = false;
             }
             else
             {
-                document.querySelector('button').disabled = true;
+                document.getElementById('btn').disabled = true;
             }
         }
 

@@ -16,7 +16,7 @@
             <div class="form-group">
                 <input class="form-control" name="password" placeholder="Password" type="password" pattern="[A-Za-z0-9]+">
             </div>
-            <button class="btn btn-light" type="submit" disabled>Log in</button>
+            <button id="btn" class="btn btn-light" type="submit" disabled>Log in</button>
         </form>
     </div>
 {% endblock %}
@@ -28,11 +28,11 @@
         {
             if (input[0].value && input[1].value.length >= 8)
             {
-                document.querySelector('button').disabled = false;
+                document.getElementById('btn').disabled = false;
             }
             else
             {
-                document.querySelector('button').disabled = true;
+                document.getElementById('btn').disabled = true;
             }
         }
 

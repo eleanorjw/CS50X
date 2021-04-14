@@ -16,7 +16,7 @@ The web-app is loosely based on CS50 Finance in terms of use of Flask and some i
 
 **The Registering and Loging In**
 
-The users are required to create at least a 8 characters password with letters and numbers only with at least a number in it.
+The users are required to create at least a 8 characters password with letters and numbers only with at least a number and a letter in it.
 The checking of inputs and password are done on the client-side, the user won't able to submit until all requirements turn green. The username is checked from database after submitted.
 
 For login, the submit button is only enabled when both fields are input and the password has more than 8 characters.
