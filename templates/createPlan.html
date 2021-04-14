@@ -73,8 +73,7 @@
                     <option value="30">30 sec</option>
                  </select>
             </div>
-            <button id="btnd" class="btn btn-dark" type="submit" disabled>Create</button>
-            <button id="btnsh" class="btn btn-dark" type="submit" style="display:none;">Create</button>
+            <button class="btn btn-dark" type="submit" disabled>Create</button>
         </form>
     </div>
 
@@ -170,13 +169,11 @@
         {
             if (input[1].value != '' && select[1].value != '' && select[2].value != '' && document.querySelector('ol').innerText != '')
             {
-                document.getElementById('btnsh').style.display = 'inline-block';
-                document.getElementById('btnd').style.display = 'none';
+                document.querySelector('button').disabled = false;
             }
             else
             {
-                document.getElementById('btnd').style.display = 'inline-block';
-                document.getElementById('btnsh').style.display = 'none';
+                document.querySelector('button').disabled = true;
             }
         }
 

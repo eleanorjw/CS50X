@@ -28,8 +28,7 @@
             </div>
 
 
-            <button id="btnd" class="btn btn-light" type="submit" disabled>Register</button>
-            <button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Register</button>
+            <button class="btn btn-light" type="submit" disabled>Register</button><button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Register</button>
         </form>
     </div>
 {% endblock %}
@@ -47,19 +46,16 @@
             {
                 if (password1 && password2 && confirm)
                 {
-                    document.getElementById('btnsh').style.display = 'inline-block';
-                    document.getElementById('btnd').style.display = 'none';
+                    document.querySelector('button').disabled = false;
                 }
                 else
                 {
-                    document.getElementById('btnd').style.display = 'inline-block';
-                    document.getElementById('btnsh').style.display = 'none';
+                    document.querySelector('button').disabled = true;
                 }
             }
             else
             {
-                document.getElementById('btnd').style.display = 'inline-block';
-                document.getElementById('btnsh').style.display = 'none';
+                document.querySelector('button').disabled = true;
             }
         }
 

@@ -16,8 +16,7 @@
             <div class="form-group">
                 <input class="form-control" name="password" placeholder="Password" type="password" pattern="[A-Za-z0-9]+">
             </div>
-            <button id="btnd" class="btn btn-light" type="submit" disabled>Log in</button>
-            <button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Log in</button>
+            <button class="btn btn-light" type="submit" disabled>Log in</button>
         </form>
     </div>
 {% endblock %}
@@ -29,13 +28,11 @@
         {
             if (input[0].value && input[1].value.length >= 8)
             {
-                document.getElementById('btnsh').style.display = 'inline-block';
-                document.getElementById('btnd').style.display = 'none';
+                document.querySelector('button').disabled = false;
             }
             else
             {
-                document.getElementById('btnd').style.display = 'inline-block';
-                document.getElementById('btnsh').style.display = 'none';
+                document.querySelector('button').disabled = true;
             }
         }
 

@@ -46,7 +46,7 @@ When a existing plan is choosen, the user is redirected to start.html to have a 
 When the workout is completed, the workout info is sent to database through url.
 
 When the user chooses to create new plan, the user is redirected to createPlan.html, user could search for workout with asynchronous search bar and select dropdown for catogeries. I have made the search result to return in JSON and insert each as table row for view.
-The user could adds, deletes, sets duration and break time to create a new plan. To create the plan, I decided to send formdata to server as my solution, I had stringify the array of workouts and append into the formdata so that all information of the plan will be received by server. 
+The user could adds, deletes, sets duration and break time to create a new plan. To create the plan, I decided to send formdata to server as my solution, I had stringify the array of workouts and append into the formdata so that all informations of the plan will be received bu server.
 
 Besides, there is also feature for user to add new workout for more workout options when redirected to addExercise.html.
 
@@ -62,3 +62,5 @@ Show users their workout histories ordered from latest. The histories will also 
 1. Publish in Heroku.
 2. Sound effects, BGM and short description for workout
 3. Back button for create plan and add exercise
+4. Users' info page
+5. Statistic of users' weight and etc

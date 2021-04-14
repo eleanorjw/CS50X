@@ -24,8 +24,7 @@
                     <option value="full body">full body</option>
                  </select>
             </div>
-            <button id="btnd" class="btn btn-light" type="submit" disabled>Add</button>
-            <button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Add</button>
+            <button class="btn btn-light" type="submit" disabled>Add</button>
         </form>
     </div>
 {% endblock %}
@@ -40,13 +39,11 @@
         {
             if (input[0].value && select.value != '')
             {
-                document.getElementById('btnsh').style.display = 'inline-block';
-                document.getElementById('btnd').style.display = 'none';
+                document.querySelector('button').disabled = false;
             }
             else
             {
-                document.getElementById('btnd').style.display = 'inline-block';
-                document.getElementById('btnsh').style.display = 'none';
+                document.querySelector('button').disabled = true;
             }
         }
 
