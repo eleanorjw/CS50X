@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <div id="home">
+        <p class="p1">Let's Get Started!</p>
+    </div>
+    <div class="text-dark bg-light div">
+        <h2>Body Mass Index (BMI) Calculator</h2>
+        <form onsubmit="calc_bmi();return false">
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" placeholder="Weight (kg)" type="text" pattern="[0-9]+">
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" placeholder="Height (cm)" type="text" pattern="[0-9]+">
+                <br><small class="text-muted">Integer only</small>
+            </div>
+            <p id="bmi" style="display:none;">Your BMI is <span id="index"></span>. You are <span id="status"></span>.</p>
+            <button type="submit" class="btn btn-dark">Calculate</button>
+        </form>
+        <p class="small text-muted">For more information, visit <a class="text-info" href="https://www.healthline.com/health/waist-to-hip-ratio">here</a>.</p>
+    </div>
+    <div class="bg-dark div">
+        <h2>Waist-to-Hip Ratio Calculator</h2>
+        <p>
+            According to the <a class="text-info" href="https://apps.who.int/iris/bitstream/handle/10665/44583/9789241501491_eng.pdf;jsessionid=3662A9AFD820786E2260F5F3D05C4A87?sequence=1">World Health Organization</a> (WHO), a healthy WHR is:
+            <ul>
+                <li>0.90 or less for men</li>
+                <li>0.85 or less for women</li>
+            </ul>
+            <form onsubmit="calc_whr();return false">
+                <div class="form-group">
+                    <input autocomplete="off" class="form-control" placeholder="Waist (cm)" type="text" pattern="[0-9]+">
+                </div>
+                <div class="form-group">
+                    <input autocomplete="off" class="form-control" placeholder="Hip (cm)" type="text" pattern="[0-9]+">
+                    <br><small class="text-white-50">Integer only</small>
+                </div>
+                <p id="whr" style="display:none">Your waist-to-hip ratio is <span id="ratio"></span>.</p>
+                <button type="submit" class="btn btn-light">Calculate</button>
+            </form>
+            <p class="small text-white-50">For more information, visit <a class="text-info" href="https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html">here</a>.</p>
+        </p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var input = document.querySelectorAll('input');
+
+        //Calculate BMI
+        function calc_bmi()
+        {
+            if (input[0].value && input[1].value)
+            {
+                document.getElementById('bmi').style.display = 'block';
+                let bmi = (parseInt(input[0].value, 10) / ((parseInt(input[1].value, 10) / 100) ** 2)).toFixed(2);
+                document.getElementById('index').innerHTML = bmi;
+                if (bmi < 18.5)
+                {
+                    document.getElementById('status').innerHTML = 'underweight';
+                }
+                else if (bmi < 25)
+                {
+                    document.getElementById('status').innerHTML = 'in healthy weight';
+                }
+                else if(bmi < 30)
+                {
+                    document.getElementById('status').innerHTML = 'overweight';
+                }
+                else
+                {
+                    document.getElementById('status').innerHTML = 'obese';
+                }
+            }
+            else
+            {
+                document.getElementById('bmi').style.display = 'none';
+            }
+        }
+
+        //Calculate WHR
+        function calc_whr()
+        {
+            if (input[2].value && input[3].value)
+            {
+                document.getElementById('whr').style.display = 'block';
+                let whr = (parseInt(input[2].value, 10) / parseInt(input[3].value, 10)).toFixed(2);
+                document.getElementById('ratio').innerHTML = whr;
+            }
+            else
+            {
+                document.getElementById('whr').style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}
