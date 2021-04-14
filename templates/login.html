@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <form action="/login" method="post">
+            <div class="form-group">
+                <div id="hide" style="color:#FF6347;">
+                    <small>{{ invalid }}</small>
+                </div>
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password" pattern="[A-Za-z0-9]+">
+            </div>
+            <button class="btn btn-light" type="submit" disabled>Log in</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var input = document.querySelectorAll('input');
+        function login()
+        {
+            if (input[0].value && input[1].value.length >= 8)
+            {
+                document.querySelector('button').disabled = false;
+            }
+            else
+            {
+                document.querySelector('button').disabled = true;
+            }
+        }
+
+        function hide()
+        {
+            document.getElementById('hide').style.display = 'none';
+        }
+
+        //Disable btn until form filled & hide warning
+        input[0].addEventListener('keyup', function()
+        {
+            hide();
+            login();
+        });
+
+        input[1].addEventListener('keyup', function()
+        {
+            hide();
+            login();
+        });
+    </script>
+
+{% endblock %}

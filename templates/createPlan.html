@@ -1,0 +1,187 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Plans
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <div id="hide" style="color:#FF6347;">
+            <small>{{ invalid }}</small>
+        </div>
+        <h1 class="pt-3">Customize Your Workout!</h1>
+        <form onchange="search()" class="p-3">
+            <div class="form-group">
+                <input class="p-1" autocomplete="false" autofocus placeholder="Search">
+                <select class="p-2 rounded">
+                    <option value="" selected disabled>Body Parts</option>
+                    <option value="lower body">lower body</option>
+                    <option value="upper body">upper body</option>
+                    <option value="full body">full body</option>
+                 </select><br>
+                 <small class="text-white-50">Scoll down to complete</small>
+            </div>
+        </form>
+        <div class="table-block pb-5">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Exercise</th>
+                        <th scope="col">Image</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ex in ex %}
+                        <tr>
+                            <td>{{ ex.name }}</td>
+                            <td><img class="rounded" style="width: 6rem; max-height: 4rem;"src="{{ ex.link }}"></td>
+                            <td><button onclick="btn(this.value); enable()" class="btn btn-dark" value="{{ ex.name}}">+</button></td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th colspan="3"><a href="/add" class="text-info">Add More</a></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="m-3">
+            <ol>
+            </ol>
+        </div>
+    </div>
+    <div class="div bg-light text-dark">
+        <form name="set" onsubmit="send()" onchange="enable()">
+            <h2 class="p-2">Set it Up</h2>
+            <div class="form-group">
+                <input name="plan" autocomplete="off" placeholder="Plan name">
+            </div>
+            <div class="form-group">
+                <select name="dur" class="p-2 rounded">
+                    <option value="" selected disabled>Duration (sec)</option>
+                    <option value="20">20 sec</option>
+                    <option value="30">30 sec</option>
+                    <option value="45">45 sec</option>
+                    <option value="60">60 sec</option>
+                 </select>
+            </div>
+            <div class="form-group">
+                <select name="rest" class="p-2 rounded">
+                    <option value="" selected disabled>Rest (sec)</option>
+                    <option value="5">5 sec</option>
+                    <option value="15">15 sec</option>
+                    <option value="30">30 sec</option>
+                 </select>
+            </div>
+            <button class="btn btn-dark" type="submit" disabled>Create</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        let input = document.querySelectorAll('input');
+        let select = document.querySelectorAll('select');
+        let button = document.querySelectorAll('button');
+        let exer;
+        let li = '';
+        let liArray = [];
+
+
+        //Handle click
+        function btn(e)
+        {
+            if (liArray.length == 0)
+            {
+                li += '<li class="text-break">' + e + '</li>';
+                liArray.push(e);
+            }
+            else
+            {
+                let splice = 0;
+                for (let i = 0; i < liArray.length; i++)
+                {
+                    if (liArray[i] == e)
+                    {
+                        liArray.splice(i, 1);
+                        li = '';
+                        for (let j = 0; j < liArray.length; j++)
+                        {
+                            li += '<li class="text-break">' + liArray[j] + '</li>';
+                        }
+                        splice = 1;
+                        break;
+                    }
+                }
+                if (splice == 0)
+                {
+                    li += '<li class="text-break">' + e + '</li>';
+                    liArray.push(e);
+                }
+            }
+
+
+            document.querySelector('ol').innerHTML = li;
+        }
+
+        //Search and display as table
+        function search()
+        {
+            //Send request and receive list of exercise
+            const Http = new XMLHttpRequest();
+
+            Http.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    exer = JSON.parse(this.responseText);
+                    document.querySelector('tbody').innerHTML = '';
+                    let html ='';
+
+                    for (let i = 0; i  < exer.length; i++)
+                    {
+                        html += '<tr><td>' + exer[i].name + '</td><td><img class="rounded" style="width: 6rem; max-height: 4rem;" src=' +
+                                exer[i].link + '></td><td><button onclick="btn(this.value); enable()" class="btn btn-dark" value="' +
+                                exer[i].name + '">' + '+' + '</button></td></tr>';
+                    }
+                    html += '<tr><th colspan="3"><a href="/add" class="text-info">Add More</a></th></tr>';
+                    document.querySelector('tbody').innerHTML = html;
+                }
+            };
+
+            Http.open("GET", window.location.origin + "/s?q=" + input[0].value.replace(" ", "-") +
+                "&e=" + select[0].value.replace(" ", "-"), true);
+            Http.send();
+        }
+
+        //Send and submit
+        function send()
+        {
+            let form = new FormData(document.forms.set);
+            form.append("document", JSON.stringify(liArray));
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "/create");
+            xhr.send(form);
+        }
+
+        //Enable button
+        function enable()
+        {
+            if (input[1].value != '' && select[1].value != '' && select[2].value != '' && document.querySelector('ol').innerText != '')
+            {
+                document.querySelector('button').disabled = false;
+            }
+            else
+            {
+                document.querySelector('button').disabled = true;
+            }
+        }
+
+        //Hide warning
+        document.body.addEventListener('click', function()
+        {
+            document.getElementById('hide').style.display = 'none';
+        });
+
+    </script>
+{% endblock %}

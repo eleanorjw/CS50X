@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="div-f">
+        <form action="/register" method="post">
+            <div class="form-group">
+                <div id="hide" style="color:#FF6347;">
+                    <small>{{ invalid }}</small>
+                </div>
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            </div><br>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password" pattern="[A-Za-z0-9]+">
+                <br><small class="text-muted">Only letters and numbers</small><br>
+                <div style="display:none; color:#FF6347;" id="p_alert">
+                    <small id="len">At least 8 characters</small><br>
+                    <small id="num">At least a number</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password" pattern="[A-Za-z0-9]+">
+                <small class="text-center" style="display:none; color:#FF6347;" id="con">Password same as the above</small>
+            </div>
+
+
+            <button class="btn btn-light" type="submit" disabled>Register</button><button id="btnsh" class="btn btn-light" type="submit" style="display:none;">Register</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var input = document.querySelectorAll('input');
+        var password1, password2, confirm = false;
+
+        //Enable register button if input is valid
+        function register()
+        {
+            //Enable submit button
+            if (input[0].value)
+            {
+                if (password1 && password2 && confirm)
+                {
+                    document.querySelector('button').disabled = false;
+                }
+                else
+                {
+                    document.querySelector('button').disabled = true;
+                }
+            }
+            else
+            {
+                document.querySelector('button').disabled = true;
+            }
+        }
+
+        //Check valid input as stated
+        function valid()
+        {
+            let l = input[1].value.length;
+            if (l >= 8)
+            {
+                document.getElementById('len').style.color = '#66CDAA';
+                password1 = true;
+            }
+            else
+            {
+                document.getElementById('len').style.color ='#FF6347';
+                password1 = false;
+            }
+            for (let i = 0; i < l; i++)
+            {
+                if(input[1].value[i] >= 48 || input[1].value[i] <= 57)
+                {
+                    document.getElementById('num').style.color = '#66CDAA';
+                    password2 = true;
+                }
+                else
+                {
+                    document.getElementById('num').style.color = '#FF6347';
+                    password2 = false;
+                }
+            }
+        }
+
+        //Check for same password is input
+        function check_p()
+        {
+            if (input[1].value == input[2].value)
+            {
+                document.getElementById('con').style.color  = '#66CDAA';
+                confirm = true;
+            }
+            else
+            {
+                document.getElementById('con').style.color  = '#FF6347';
+                confirm = false;
+            }
+        }
+
+        //Hide warning
+        function hide()
+        {
+            document.getElementById('hide').style.display = 'none';
+        }
+
+        input[0].addEventListener('keyup', function()
+        {
+            hide();
+            register();
+        });
+
+        //Check valid input
+        input[1].addEventListener('keyup', function()
+        {
+            document.getElementById('p_alert').style.display = 'block';
+            hide();
+            valid();
+            check_p();
+            register();
+        });
+
+        //Confirm same password
+        input[2].addEventListener('keyup', function()
+        {
+            document.getElementById('con').style.display = 'block';
+            hide();
+            check_p();
+            register();
+        });
+    </script>
+{% endblock %}
