@@ -5,7 +5,7 @@
 This is a web-application I created for my final project in CS50X.
 It was coded in CS50 ide in python, HTML, Javascript and CSS.
 It has features such as,
-BMI & Waist-Hip-ratio calculator to let users have some insight into their health status,
+BMI & Waist-Hip-ratio calculator to let users have some insights into their health status,
 IntervalTimer for HIIT, Tabata and whatnot,
 Stopwatch to keep track of time elapsed, AND
 Workout plans which enable users to personalise.
